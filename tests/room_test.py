@@ -1,6 +1,7 @@
 import unittest
 from src.room import Room
 from src.song import Song
+from src.guest import Guest
 
 
 class TestRoom(unittest.TestCase):
@@ -27,4 +28,11 @@ class TestRoom(unittest.TestCase):
         self.room.add_song(song)
         actual = self.room.songs[0]
         expected = song
+        self.assertEqual(actual, expected)
+
+    def test_can_check_in_guest(self):
+        guest = Guest("Fred Fudge")
+        self.room.check_in(guest)
+        actual = self.room.guests[0]
+        expected = guest
         self.assertEqual(actual, expected)
