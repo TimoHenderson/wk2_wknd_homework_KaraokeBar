@@ -6,11 +6,11 @@ from src.guest import Guest
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        self.room = Room("Big Room", 3)
+        self.room = Room("Small Room", 1)
 
     def test_has_name(self):
         actual = self.room.name
-        expected = "Big Room"
+        expected = "Small Room"
         self.assertEqual(actual, expected)
 
     def test_has_songs(self):
@@ -30,12 +30,24 @@ class TestRoom(unittest.TestCase):
         expected = song
         self.assertEqual(actual, expected)
 
-    def test_can_check_in_guest(self):
+    def test_can_check_in_guest__has_space(self):
         guest = Guest("Fred Fudge")
-        self.room.check_in(guest)
+        successful = self.room.check_in(guest)
         actual = self.room.guests[0]
         expected = guest
         self.assertEqual(actual, expected)
+        self.assertTrue(successful)
+
+    def test_can_check_in_guest__no_space(self):
+        guest = Guest("Fred Fudge")
+        guest2 = Guest("Arnold Clark")
+        self.room.check_in(guest)
+        successful = self.room.check_in(guest2)
+        actual = self.room.guests[0]
+        expected = guest
+        self.assertEqual(actual, expected)
+        self.assertFalse(successful)
+        self.assertEqual(len(self.room.guests), 1)
 
     def test_can_check_out_guest(self):
         guest = Guest("Fred Fudge")
@@ -47,5 +59,5 @@ class TestRoom(unittest.TestCase):
 
     def test_has_capacity(self):
         actual = self.room.capacity
-        expected = 3
+        expected = 1
         self.assertEqual(actual, expected)
