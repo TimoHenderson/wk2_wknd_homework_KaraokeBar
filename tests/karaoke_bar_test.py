@@ -17,3 +17,14 @@ class TestKaraokeBar(unittest.TestCase):
         actual = self.karaoke_bar.rooms
         expected = self.rooms
         self.assertEqual(actual, expected)
+
+    def test_can_find_room_by_name__exists(self):
+        room = self.karaoke_bar.find_room_by_name("Medium Room")
+        actual = room
+        expected = self.rooms[1]
+        self.assertEqual(actual, room)
+
+    def test_can_find_room_by_name__does_not_exist(self):
+        room = self.karaoke_bar.find_room_by_name("Fake Room")
+        actual = room
+        self.assertIsNone(actual)
