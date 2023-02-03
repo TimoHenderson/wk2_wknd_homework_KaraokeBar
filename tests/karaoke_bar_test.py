@@ -10,3 +10,8 @@ class TestKaraokeBar(unittest.TestCase):
         actual = self.karaoke_bar.name
         expected = "K Bar"
         self.assertEqual(actual, expected)
+
+    def test_has_rooms(self):
+        actual = self.karaoke_bar.rooms
+        expected = []
+        self.assertEqual(actual, expected)
