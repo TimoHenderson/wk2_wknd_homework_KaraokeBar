@@ -9,7 +9,7 @@ class Room:
         self.songs.append(song)
 
     def check_in(self, guest):
-        if len(self.guests) < self.capacity:
+        if self.has_space():
             self.guests.append(guest)
             return True
         else:
@@ -17,3 +17,6 @@ class Room:
 
     def check_out(self, guest):
         self.guests.remove(guest)
+
+    def has_space(self):
+        return len(self.guests) < self.capacity

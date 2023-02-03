@@ -7,6 +7,8 @@ from src.guest import Guest
 class TestRoom(unittest.TestCase):
     def setUp(self):
         self.room = Room("Small Room", 1)
+        self.guest_1 = Guest("Fred Fudge")
+        self.guest_2 = Guest("Arnold Clark")
 
     def test_has_name(self):
         actual = self.room.name
@@ -31,28 +33,24 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_can_check_in_guest__has_space(self):
-        guest = Guest("Fred Fudge")
-        successful = self.room.check_in(guest)
+        successful = self.room.check_in(self.guest_1)
         actual = self.room.guests[0]
-        expected = guest
+        expected = self.guest_1
         self.assertEqual(actual, expected)
         self.assertTrue(successful)
 
     def test_can_check_in_guest__no_space(self):
-        guest = Guest("Fred Fudge")
-        guest2 = Guest("Arnold Clark")
-        self.room.check_in(guest)
-        successful = self.room.check_in(guest2)
+        self.room.check_in(self.guest_1)
+        successful = self.room.check_in(self.guest_2)
         actual = self.room.guests[0]
-        expected = guest
+        expected = self.guest_1
         self.assertEqual(actual, expected)
         self.assertFalse(successful)
         self.assertEqual(len(self.room.guests), 1)
 
     def test_can_check_out_guest(self):
-        guest = Guest("Fred Fudge")
-        self.room.check_in(guest)
-        self.room.check_out(guest)
+        self.room.check_in(self.guest_1)
+        self.room.check_out(self.guest_1)
         actual = self.room.guests
         expected = []
         self.assertEqual(actual, expected)
@@ -61,3 +59,12 @@ class TestRoom(unittest.TestCase):
         actual = self.room.capacity
         expected = 1
         self.assertEqual(actual, expected)
+
+    def test_has_room__False(self):
+        self.room.check_in(self.guest_1)
+        has_space = self.room.has_space()
+        self.assertFalse(has_space)
+
+    def test_has_room__True(self):
+        has_space = self.room.has_space()
+        self.assertTrue(has_space)

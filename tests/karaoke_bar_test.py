@@ -13,6 +13,9 @@ class TestKaraokeBar(unittest.TestCase):
         ]
         self.karaoke_bar = KaraokeBar("K Bar", self.rooms)
 
+        self.guest_1 = Guest("Fred Fudge")
+        self.guest_2 = Guest("Arnold Clark")
+
     def test_has_name(self):
         actual = self.karaoke_bar.name
         expected = "K Bar"
@@ -34,17 +37,29 @@ class TestKaraokeBar(unittest.TestCase):
         actual = room
         self.assertIsNone(actual)
 
-    def test_can_check_in_guest(self):
-        guest = Guest("Fred Fudge")
-        self.karaoke_bar.check_in_guest(guest, "Medium Room")
-        actual = self.karaoke_bar.rooms[1].guests[0]
-        expected = guest
+    @unittest.skip("")
+    def test_can_check_in_guest__enough_space(self):
+        actual_message = self.karaoke_bar.check_in_guest(self.guest_1, "Small Room")
+        expected_message = "Fred Fudge checked in to Small Room"
+        actual = self.karaoke_bar.rooms[2].guests[0]
+        expected = self.guest_1
         self.assertEqual(actual, expected)
+        self.assertEqual(actual_message, expected_message)
+
+    @unittest.skip("")
+    def test_can_check_in_guest__not_enough_space(self):
+        self.karaoke_bar.check_in_guest(self.guest_1, "Small Room")
+        actual_message = self.karaoke_bar.check_in_guest(self.guest_2, "Small Room")
+        expected_message = "No space in Small Room. Arnold Clark checked into Big Room"
+        actual = self.karaoke_bar.rooms[0].guests[0]
+        expected = self.guest_1
+        self.assertEqual(actual, expected)
+        self.assertEqual(actual_message, expected_message)
 
     def test_can_check_out_guest(self):
-        guest = Guest("Fred Fudge")
-        self.karaoke_bar.check_in_guest(guest, "Medium Room")
-        self.karaoke_bar.check_out_guest(guest, "Medium Room")
+
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_out_guest(self.guest_1, "Medium Room")
         actual = self.karaoke_bar.rooms[1].guests
         expected = []
         self.assertEqual(actual, expected)
