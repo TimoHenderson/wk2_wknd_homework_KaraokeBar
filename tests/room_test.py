@@ -15,3 +15,8 @@ class TestRoom(unittest.TestCase):
         actual = self.room.songs
         expected = []
         self.assertEqual(actual, expected)
+
+    def test_has_guests(self):
+        actual = self.room.guests
+        expected = []
+        self.assertEqual(actual, expected)
