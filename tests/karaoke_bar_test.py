@@ -36,3 +36,11 @@ class TestKaraokeBar(unittest.TestCase):
         actual = self.karaoke_bar.rooms[1].guests[0]
         expected = guest
         self.assertEqual(actual, expected)
+
+    def test_can_check_out_guest(self):
+        guest = Guest("Fred Fudge")
+        self.karaoke_bar.check_in_guest(guest, "Medium Room")
+        self.karaoke_bar.check_out_guest(guest, "Medium Room")
+        actual = self.karaoke_bar.rooms[1].guests
+        expected = []
+        self.assertEqual(actual, expected)
