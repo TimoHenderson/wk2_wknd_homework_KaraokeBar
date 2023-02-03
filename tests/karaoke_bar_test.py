@@ -1,6 +1,7 @@
 import unittest
 from src.karaoke_bar import KaraokeBar
 from src.room import Room
+from src.guest import Guest
 
 
 class TestKaraokeBar(unittest.TestCase):
@@ -28,3 +29,10 @@ class TestKaraokeBar(unittest.TestCase):
         room = self.karaoke_bar.find_room_by_name("Fake Room")
         actual = room
         self.assertIsNone(actual)
+
+    def test_can_check_in_guest(self):
+        guest = Guest("Fred Fudge")
+        self.karaoke_bar.check_in_guest(guest, "Medium Room")
+        actual = self.karaoke_bar.rooms[1].guests[0]
+        expected = guest
+        self.assertEqual(actual, expected)

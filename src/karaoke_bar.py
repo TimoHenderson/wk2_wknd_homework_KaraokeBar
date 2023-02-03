@@ -5,3 +5,7 @@ class KaraokeBar:
 
     def find_room_by_name(self, name):
         return next((room for room in self.rooms if room.name == name), None)
+
+    def check_in_guest(self, guest, room_name):
+        room = self.find_room_by_name(room_name)
+        room.check_in(guest)
