@@ -6,7 +6,7 @@ from src.guest import Guest
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        self.room = Room("Big Room")
+        self.room = Room("Big Room", 3)
 
     def test_has_name(self):
         actual = self.room.name
@@ -43,4 +43,9 @@ class TestRoom(unittest.TestCase):
         self.room.check_out(guest)
         actual = self.room.guests
         expected = []
+        self.assertEqual(actual, expected)
+
+    def test_has_capacity(self):
+        actual = self.room.capacity
+        expected = 3
         self.assertEqual(actual, expected)

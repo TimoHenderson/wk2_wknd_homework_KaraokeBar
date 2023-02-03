@@ -6,7 +6,11 @@ from src.guest import Guest
 
 class TestKaraokeBar(unittest.TestCase):
     def setUp(self):
-        self.rooms = [Room("Big Room"), Room("Medium Room"), Room("Small Room")]
+        self.rooms = [
+            Room("Big Room", 3),
+            Room("Medium Room", 2),
+            Room("Small Room", 1),
+        ]
         self.karaoke_bar = KaraokeBar("K Bar", self.rooms)
 
     def test_has_name(self):
