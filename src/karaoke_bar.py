@@ -14,11 +14,13 @@ class KaraokeBar:
             return "Sorry, you don't have enough cash"
 
         if desired_room.has_space():
+            self.charge_guest(guest, self.entry_fee)
             desired_room.check_in(guest)
             return f"{guest.name} checked in to {desired_room.name}"
         else:
             room_with_space = self.find_room_with_space()
             if room_with_space != None:
+                self.charge_guest(guest, self.entry_fee)
                 room_with_space.check_in(guest)
                 return f"No space in {desired_room.name}. {guest.name} checked into {room_with_space.name}"
             else:
