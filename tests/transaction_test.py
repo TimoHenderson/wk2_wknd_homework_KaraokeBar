@@ -17,3 +17,8 @@ class TestTransaction(unittest.TestCase):
         actual = self.transaction.guest
         expected = self.guest
         self.assertEqual(actual, expected)
+
+    def test_has_amount(self):
+        actual = self.transaction.amount
+        expected = 5.00
+        self.assertEqual(actual, expected)
