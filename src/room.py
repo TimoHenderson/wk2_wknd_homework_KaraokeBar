@@ -11,9 +11,8 @@ class Room:
     def check_in(self, guest):
         if self.has_space():
             self.guests.append(guest)
-            return True
-        else:
-            return False
+            if self.favourite_song_in_room(guest):
+                return "Woohoo"
 
     def check_out(self, guest):
         self.guests.remove(guest)

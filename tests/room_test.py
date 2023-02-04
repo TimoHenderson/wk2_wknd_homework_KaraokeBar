@@ -35,20 +35,30 @@ class TestRoom(unittest.TestCase):
         expected = song
         self.assertEqual(actual, expected)
 
-    def test_can_check_in_guest__has_space(self):
-        successful = self.room.check_in(self.guest_1)
+    def test_can_check_in_guest__has_space_no_fav_song(self):
+        message = self.room.check_in(self.guest_1)
         actual = self.room.guests[0]
         expected = self.guest_1
         self.assertEqual(actual, expected)
-        self.assertTrue(successful)
+        self.assertIsNone(message)
+
+    def test_can_check_in_guest__has_space_has_fav_song(self):
+        guest = self.guest_with_fav_song
+        self.room.add_song(self.song_1)
+        message = self.room.check_in(guest)
+        actual = self.room.guests[0]
+        expected = guest
+        self.assertEqual(actual, expected)
+        expected_message = "Woohoo"
+        self.assertEqual(message, expected_message)
 
     def test_can_check_in_guest__no_space(self):
         self.room.check_in(self.guest_1)
-        successful = self.room.check_in(self.guest_2)
+        self.room.check_in(self.guest_2)
         actual = self.room.guests[0]
         expected = self.guest_1
         self.assertEqual(actual, expected)
-        self.assertFalse(successful)
+
         self.assertEqual(len(self.room.guests), 1)
 
     def test_can_check_out_guest(self):
