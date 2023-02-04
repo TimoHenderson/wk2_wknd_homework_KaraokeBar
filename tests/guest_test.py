@@ -1,10 +1,13 @@
 import unittest
 from src.guest import Guest
+from src.song import Song
 
 
 class TestGuest(unittest.TestCase):
     def setUp(self):
         self.guest = Guest("Fred", 15.00)
+        self.song = Song("Walk", "Pantera")
+        self.guest_with_fav_song = Guest("Jenny", 15.00, self.song)
 
     def test_has_name(self):
         actual = self.guest.name
@@ -37,3 +40,13 @@ class TestGuest(unittest.TestCase):
         expected = 15.00
         self.assertEqual(actual, expected)
         self.assertFalse(success)
+
+    def test_has_favourite_song__default(self):
+        actual = self.guest.favourite_song
+        expected = None
+        self.assertEqual(actual, expected)
+
+    def test_has_favourite_song__initialised(self):
+        actual = self.guest_with_fav_song.favourite_song
+        expected = self.song
+        self.assertEqual(actual, expected)
