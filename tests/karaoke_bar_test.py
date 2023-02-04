@@ -86,3 +86,8 @@ class TestKaraokeBar(unittest.TestCase):
         actual = self.karaoke_bar.total_cash
         expected = 0.00
         self.assertEqual(actual, expected)
+
+    def test_has_entry_fee(self):
+        actual = self.karaoke_bar.entry_fee
+        expected = 5.00
+        self.assertEqual(actual, expected)

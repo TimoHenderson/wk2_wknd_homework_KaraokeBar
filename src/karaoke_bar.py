@@ -3,6 +3,7 @@ class KaraokeBar:
         self.name = name
         self.rooms = rooms
         self.total_cash = 0.00
+        self.entry_fee = 5.00
 
     def find_room_by_name(self, name):
         return next((room for room in self.rooms if room.name == name), None)
