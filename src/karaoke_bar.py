@@ -27,3 +27,7 @@ class KaraokeBar:
 
     def find_room_with_space(self):
         return next((room for room in self.rooms if room.has_space()), None)
+
+    def charge_guest(self, guest, amount):
+        if guest.pay_cash(amount):
+            self.total_cash += amount

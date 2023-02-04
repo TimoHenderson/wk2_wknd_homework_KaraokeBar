@@ -15,6 +15,7 @@ class TestKaraokeBar(unittest.TestCase):
 
         self.guest_1 = Guest("Fred Fudge", 15.00)
         self.guest_2 = Guest("Arnold Clark", 12.00)
+        self.poor_guest = Guest("Ann Gloag", 4.00)
 
     def test_has_name(self):
         actual = self.karaoke_bar.name
@@ -91,3 +92,21 @@ class TestKaraokeBar(unittest.TestCase):
         actual = self.karaoke_bar.entry_fee
         expected = 5.00
         self.assertEqual(actual, expected)
+
+    def test_charge_guest__can_afford(self):
+        self.karaoke_bar.charge_guest(self.guest_1, self.karaoke_bar.entry_fee)
+        actual_k_bar_cash = self.karaoke_bar.total_cash
+        expected_k_bar_cash = 5.00
+        self.assertEqual(actual_k_bar_cash, expected_k_bar_cash)
+        actual_guest_cash = self.guest_1.cash
+        expected_guest_cash = 10.00
+        self.assertEqual(actual_guest_cash, expected_guest_cash)
+
+    def test_charge_guest__can_not_afford(self):
+        self.karaoke_bar.charge_guest(self.poor_guest, self.karaoke_bar.entry_fee)
+        actual_k_bar_cash = self.karaoke_bar.total_cash
+        expected_k_bar_cash = 0.00
+        self.assertEqual(actual_k_bar_cash, expected_k_bar_cash)
+        actual_guest_cash = self.poor_guest.cash
+        expected_guest_cash = 4.00
+        self.assertEqual(actual_guest_cash, expected_guest_cash)
