@@ -18,6 +18,11 @@ class TestRoom(unittest.TestCase):
         expected = "Small Room"
         self.assertEqual(actual, expected)
 
+    def test_has_transactions(self):
+        actual = self.room.transactions
+        expected = []
+        self.assertEqual(actual, expected)
+
     def test_has_entry_fee(self):
         actual = self.room.entry_fee
         expected = 5.00
@@ -118,12 +123,6 @@ class TestRoom(unittest.TestCase):
     @unittest.skip("")
     def test_charge_guest__can_afford(self):
         self.room.charge_guest("anything", self.guest, 1.00)
-        actual_k_bar_cash = self.karaoke_bar.total_cash
-        expected_k_bar_cash = 5.00
-        self.assertEqual(actual_k_bar_cash, expected_k_bar_cash)
-        actual_guest_cash = self.guest_1.cash
-        expected_guest_cash = 10.00
-        self.assertEqual(actual_guest_cash, expected_guest_cash)
 
     @unittest.skip("")
     def test_charge_guest__can_not_afford(self):

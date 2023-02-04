@@ -2,9 +2,10 @@ class Room:
     def __init__(self, name, capacity, entry_fee=5.00):
         self.name = name
         self.capacity = capacity
+        self.entry_fee = entry_fee
         self.songs = []
         self.guests = []
-        self.entry_fee = entry_fee
+        self.transactions = []
 
     def add_song(self, song):
         self.songs.append(song)
