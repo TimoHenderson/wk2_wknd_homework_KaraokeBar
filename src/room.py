@@ -20,3 +20,6 @@ class Room:
 
     def has_space(self):
         return len(self.guests) < self.capacity
+
+    def favourite_song_in_room(self, guest):
+        return guest.favourite_song in self.songs

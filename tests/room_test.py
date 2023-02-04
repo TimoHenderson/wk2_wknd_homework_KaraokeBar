@@ -9,8 +9,9 @@ class TestRoom(unittest.TestCase):
         self.room = Room("Small Room", 1)
         self.guest_1 = Guest("Fred Fudge", 15.00)
         self.guest_2 = Guest("Arnold Clark", 3.00)
-        self.song = Song("Walk", "Pantera")
-        self.guest_with_fav_song = Guest("Jenny", 12.00, self.song)
+        self.song_1 = Song("Walk", "Pantera")
+        self.song_2 = Song("Tarkus", "ELP")
+        self.guest_with_fav_song = Guest("Jenny", 12.00, self.song_1)
 
     def test_has_name(self):
         actual = self.room.name
@@ -70,3 +71,31 @@ class TestRoom(unittest.TestCase):
     def test_has_room__True(self):
         has_space = self.room.has_space()
         self.assertTrue(has_space)
+
+    def test_favourite_song_in_room__True(self):
+        room = self.room
+        song = self.song_1
+        guest = self.guest_with_fav_song
+        room.add_song(song)
+        actual = room.favourite_song_in_room(guest)
+        expected = True
+        self.assertEqual(actual, expected)
+
+    def test_favourite_song_in_room__False_guest_has_favourite(self):
+        room = self.room
+        song = self.song_1
+        song_2 = self.song_2
+        guest = self.guest_with_fav_song
+        room.add_song(song_2)
+        actual = room.favourite_song_in_room(guest)
+        expected = False
+        self.assertEqual(actual, expected)
+
+    def test_favourite_song_in_room__False_guest_has_no_favourite(self):
+        room = self.room
+        song_2 = self.song_2
+        guest = self.guest_1
+        room.add_song(song_2)
+        actual = room.favourite_song_in_room(guest)
+        expected = False
+        self.assertEqual(actual, expected)
