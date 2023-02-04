@@ -38,7 +38,7 @@ class TestKaraokeBar(unittest.TestCase):
         actual = room
         self.assertIsNone(actual)
 
-    def test_can_check_in_guest__enough_space(self):
+    def test_can_check_in_guest__enough_space_and_can_afford(self):
         actual_message = self.karaoke_bar.check_in_guest(self.guest_1, "Small Room")
         expected_message = "Fred Fudge checked in to Small Room"
         actual = self.karaoke_bar.rooms[2].guests[0]
@@ -110,3 +110,13 @@ class TestKaraokeBar(unittest.TestCase):
         actual_guest_cash = self.poor_guest.cash
         expected_guest_cash = 4.00
         self.assertEqual(actual_guest_cash, expected_guest_cash)
+
+    def test_check_in_guest__can_afford(self):
+        actual_message = self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        expected_message = "Fred Fudge checked in to Medium Room"
+        self.assertEqual(actual_message, expected_message)
+
+    def test_check_in_guest__can_not_afford(self):
+        actual_message = self.karaoke_bar.check_in_guest(self.poor_guest, "Medium Room")
+        expected_message = "Sorry, you don't have enough cash"
+        self.assertEqual(actual_message, expected_message)
