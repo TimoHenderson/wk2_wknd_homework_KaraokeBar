@@ -1,3 +1,6 @@
+from src.transaction import Transaction
+
+
 class Room:
     def __init__(self, name, capacity, entry_fee=5.00):
         self.name = name
@@ -24,3 +27,11 @@ class Room:
 
     def favourite_song_in_room(self, guest):
         return guest.favourite_song in self.songs
+
+    def charge_guest(self, item, guest, amount):
+        if guest.can_afford_to_pay(amount):
+            guest.pay_cash(amount)
+            self.transactions.append(Transaction(item, guest, amount))
+            return True
+        else:
+            return False

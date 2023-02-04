@@ -120,16 +120,22 @@ class TestRoom(unittest.TestCase):
         expected = False
         self.assertEqual(actual, expected)
 
-    @unittest.skip("")
     def test_charge_guest__can_afford(self):
-        self.room.charge_guest("anything", self.guest, 1.00)
-
-    @unittest.skip("")
-    def test_charge_guest__can_not_afford(self):
-        self.karaoke_bar.charge_guest(self.poor_guest, self.karaoke_bar.entry_fee)
-        actual_k_bar_cash = self.karaoke_bar.total_cash
-        expected_k_bar_cash = 0.00
-        self.assertEqual(actual_k_bar_cash, expected_k_bar_cash)
-        actual_guest_cash = self.poor_guest.cash
-        expected_guest_cash = 4.00
+        successful = self.room.charge_guest("anything", self.guest_1, 1.00)
+        actual_guest_cash = self.guest_1.cash
+        expected_guest_cash = 14.00
         self.assertEqual(actual_guest_cash, expected_guest_cash)
+        actual_transactions_length = len(self.room.transactions)
+        expected_transactions_length = 1
+        self.assertEqual(actual_transactions_length, expected_transactions_length)
+        self.assertTrue(successful)
+
+    def test_charge_guest__can_not_afford(self):
+        successful = self.room.charge_guest("anything", self.guest_2, 5.00)
+        actual_guest_cash = self.guest_2.cash
+        expected_guest_cash = 3.00
+        self.assertEqual(actual_guest_cash, expected_guest_cash)
+        actual_transactions_length = len(self.room.transactions)
+        expected_transactions_length = 0
+        self.assertEqual(actual_transactions_length, expected_transactions_length)
+        self.assertFalse(successful)
