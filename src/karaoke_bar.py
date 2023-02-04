@@ -8,7 +8,8 @@ class KaraokeBar:
 
     def check_in_guest(self, guest, room_name):
         desired_room = self.find_room_by_name(room_name)
-        if desired_room.check_in(guest):
+        if desired_room.has_space():
+            desired_room.check_in(guest)
             return f"{guest.name} checked in to {desired_room.name}"
         else:
             room_with_space = self.find_room_with_space()

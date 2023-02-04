@@ -54,6 +54,17 @@ class TestKaraokeBar(unittest.TestCase):
         self.assertEqual(actual, expected)
         self.assertEqual(actual_message, expected_message)
 
+    def test_can_check_in_guest__no_space(self):
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        actual_message = self.karaoke_bar.check_in_guest(self.guest_2, "Small Room")
+        expected_message = "Sorry, there is no space in any rooms"
+        self.assertEqual(actual_message, expected_message)
+
     def test_can_check_out_guest(self):
         self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
         self.karaoke_bar.check_out_guest(self.guest_1, "Medium Room")
