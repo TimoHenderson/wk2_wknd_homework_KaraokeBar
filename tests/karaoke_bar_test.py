@@ -81,3 +81,8 @@ class TestKaraokeBar(unittest.TestCase):
         actual = self.karaoke_bar.find_room_with_space()
         expected = self.rooms[2]
         self.assertEqual(actual, expected)
+
+    def test_has_cash(self):
+        actual = self.karaoke_bar.total_cash
+        expected = 0.00
+        self.assertEqual(actual, expected)
