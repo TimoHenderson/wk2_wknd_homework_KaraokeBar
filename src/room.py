@@ -14,10 +14,20 @@ class Room:
         self.songs.append(song)
 
     def check_in(self, guest):
+        checked_in = False
+        response = ""
         if self.has_space():
-            self.guests.append(guest)
-            if self.favourite_song_in_room(guest):
-                return "Woohoo"
+            if self.charge_guest("Entry", guest, self.entry_fee):
+                self.guests.append(guest)
+                checked_in = True
+                response = f"{guest.name} checked in to {self.name}. "
+                if self.favourite_song_in_room(guest):
+                    response += "Their favourite song is in this room!"
+            else:
+                response = f"{guest.name} doesn't have enough money for {self.name}. "
+        else:
+            response = f"There's no space in {self.name}. "
+        return checked_in, response
 
     def check_out(self, guest):
         self.guests.remove(guest)

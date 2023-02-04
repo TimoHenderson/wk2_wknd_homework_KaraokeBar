@@ -9,30 +9,43 @@ class KaraokeBar:
         return next((room for room in self.rooms if room.name == name), None)
 
     def check_in_guest(self, guest, room_name):
-        desired_room = self.find_room_by_name(room_name)
-        if not guest.can_afford_to_pay(self.entry_fee):
-            return "Sorry, you don't have enough cash"
-
-        if desired_room.has_space():
-            self.charge_guest(guest, self.entry_fee)
-            desired_room.check_in(guest)
-            return f"{guest.name} checked in to {desired_room.name}"
+        message = ""
+        if [
+            room for room in self.rooms if guest.can_afford_to_pay(room.entry_fee)
+        ] == []:
+            message = "Sorry, you don't have enough cash"
         else:
-            room_with_space = self.find_room_with_space()
-            if room_with_space != None:
-                self.charge_guest(guest, self.entry_fee)
-                room_with_space.check_in(guest)
-                return f"No space in {desired_room.name}. {guest.name} checked into {room_with_space.name}"
-            else:
-                return "Sorry, there is no space in any rooms"
+            desired_room = self.find_room_by_name(room_name)
+            response = desired_room.check_in(guest)
+            checked_in = response[0]
+            message += response[1]
+
+            if not checked_in:
+
+                rooms_with_space = self.find_rooms_with_space()
+                if rooms_with_space == []:
+                    message = "Sorry, there is no space in any rooms"
+                else:
+                    for room in rooms_with_space:
+                        response = room.check_in(guest)
+                        if response[0]:
+                            message += response[1]
+                            break
+                        else:
+                            message += response[1]
+
+            return message
 
     def check_out_guest(self, guest, room_name):
         room = self.find_room_by_name(room_name)
         room.check_out(guest)
 
-    def find_room_with_space(self):
-        return next((room for room in self.rooms if room.has_space()), None)
+    def find_rooms_with_space(self):
+        return [room for room in self.rooms if room.has_space()]
 
     def charge_guest(self, guest, amount):
         if guest.pay_cash(amount):
             self.total_cash += amount
+
+    def get_rooms_guest_can_afford(self, guest):
+        return [room for room in self.rooms if guest.can_afford_to_pay(room.entry_fee)]
