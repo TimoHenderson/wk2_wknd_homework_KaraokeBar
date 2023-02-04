@@ -10,9 +10,7 @@ class KaraokeBar:
 
     def check_in_guest(self, guest, room_name):
         message = ""
-        if [
-            room for room in self.rooms if guest.can_afford_to_pay(room.entry_fee)
-        ] == []:
+        if self.get_rooms_guest_can_afford(guest) == []:
             message = "Sorry, you don't have enough cash"
         else:
             desired_room = self.find_room_by_name(room_name)
@@ -34,7 +32,7 @@ class KaraokeBar:
                         else:
                             message += response[1]
 
-            return message
+        return message
 
     def check_out_guest(self, guest, room_name):
         room = self.find_room_by_name(room_name)
