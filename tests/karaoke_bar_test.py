@@ -37,7 +37,6 @@ class TestKaraokeBar(unittest.TestCase):
         actual = room
         self.assertIsNone(actual)
 
-    @unittest.skip("")
     def test_can_check_in_guest__enough_space(self):
         actual_message = self.karaoke_bar.check_in_guest(self.guest_1, "Small Room")
         expected_message = "Fred Fudge checked in to Small Room"
@@ -46,20 +45,28 @@ class TestKaraokeBar(unittest.TestCase):
         self.assertEqual(actual, expected)
         self.assertEqual(actual_message, expected_message)
 
-    @unittest.skip("")
     def test_can_check_in_guest__not_enough_space(self):
         self.karaoke_bar.check_in_guest(self.guest_1, "Small Room")
         actual_message = self.karaoke_bar.check_in_guest(self.guest_2, "Small Room")
         expected_message = "No space in Small Room. Arnold Clark checked into Big Room"
         actual = self.karaoke_bar.rooms[0].guests[0]
-        expected = self.guest_1
+        expected = self.guest_2
         self.assertEqual(actual, expected)
         self.assertEqual(actual_message, expected_message)
 
     def test_can_check_out_guest(self):
-
         self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
         self.karaoke_bar.check_out_guest(self.guest_1, "Medium Room")
         actual = self.karaoke_bar.rooms[1].guests
         expected = []
+        self.assertEqual(actual, expected)
+
+    def test_find_room_with_space(self):
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        self.karaoke_bar.check_in_guest(self.guest_1, "Medium Room")
+        actual = self.karaoke_bar.find_room_with_space()
+        expected = self.rooms[2]
         self.assertEqual(actual, expected)
