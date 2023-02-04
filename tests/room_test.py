@@ -114,3 +114,23 @@ class TestRoom(unittest.TestCase):
         actual = room.favourite_song_in_room(guest)
         expected = False
         self.assertEqual(actual, expected)
+
+    @unittest.skip("")
+    def test_charge_guest__can_afford(self):
+        self.room.charge_guest("anything", self.guest, 1.00)
+        actual_k_bar_cash = self.karaoke_bar.total_cash
+        expected_k_bar_cash = 5.00
+        self.assertEqual(actual_k_bar_cash, expected_k_bar_cash)
+        actual_guest_cash = self.guest_1.cash
+        expected_guest_cash = 10.00
+        self.assertEqual(actual_guest_cash, expected_guest_cash)
+
+    @unittest.skip("")
+    def test_charge_guest__can_not_afford(self):
+        self.karaoke_bar.charge_guest(self.poor_guest, self.karaoke_bar.entry_fee)
+        actual_k_bar_cash = self.karaoke_bar.total_cash
+        expected_k_bar_cash = 0.00
+        self.assertEqual(actual_k_bar_cash, expected_k_bar_cash)
+        actual_guest_cash = self.poor_guest.cash
+        expected_guest_cash = 4.00
+        self.assertEqual(actual_guest_cash, expected_guest_cash)

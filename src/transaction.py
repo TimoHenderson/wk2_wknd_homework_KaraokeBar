@@ -1,0 +1,3 @@
+class Transaction:
+    def __init__(self, item, guest, amount):
+        self.item = item
