@@ -13,8 +13,8 @@ class TestKaraokeBar(unittest.TestCase):
         ]
         self.karaoke_bar = KaraokeBar("K Bar", self.rooms)
 
-        self.guest_1 = Guest("Fred Fudge")
-        self.guest_2 = Guest("Arnold Clark")
+        self.guest_1 = Guest("Fred Fudge", 15.00)
+        self.guest_2 = Guest("Arnold Clark", 12.00)
 
     def test_has_name(self):
         actual = self.karaoke_bar.name

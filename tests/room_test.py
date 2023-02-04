@@ -7,8 +7,8 @@ from src.guest import Guest
 class TestRoom(unittest.TestCase):
     def setUp(self):
         self.room = Room("Small Room", 1)
-        self.guest_1 = Guest("Fred Fudge")
-        self.guest_2 = Guest("Arnold Clark")
+        self.guest_1 = Guest("Fred Fudge", 15.00)
+        self.guest_2 = Guest("Arnold Clark", 3.00)
 
     def test_has_name(self):
         actual = self.room.name
