@@ -18,6 +18,11 @@ class TestRoom(unittest.TestCase):
         expected = "Small Room"
         self.assertEqual(actual, expected)
 
+    def test_has_entry_fee(self):
+        actual = self.room.entry_fee
+        expected = 5.00
+        self.assertEqual(actual, expected)
+
     def test_has_songs(self):
         actual = self.room.songs
         expected = []
