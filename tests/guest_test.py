@@ -23,3 +23,17 @@ class TestGuest(unittest.TestCase):
     def test_can_afford_to_pay__not_enough_cash(self):
         actual = self.guest.can_afford_to_pay(16.00)
         self.assertFalse(actual)
+
+    def test_pay_cash__enough_cash(self):
+        success = self.guest.pay_cash(2.00)
+        actual = self.guest.cash
+        expected = 13.00
+        self.assertEqual(actual, expected)
+        self.assertTrue(success)
+
+    def test_pay_cash__not_enough_cash(self):
+        success = self.guest.pay_cash(16.00)
+        actual = self.guest.cash
+        expected = 15.00
+        self.assertEqual(actual, expected)
+        self.assertFalse(success)
