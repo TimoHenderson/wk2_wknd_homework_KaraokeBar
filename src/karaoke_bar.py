@@ -14,23 +14,19 @@ class KaraokeBar:
             message = "Sorry, you don't have enough cash"
         else:
             desired_room = self.find_room_by_name(room_name)
-            response = desired_room.check_in(guest)
-            checked_in = response[0]
-            message += response[1]
+            is_checked_in, check_in_message = desired_room.check_in(guest)
+            message += check_in_message
 
-            if not checked_in:
-
+            if not is_checked_in:
                 rooms_with_space = self.find_rooms_with_space()
                 if rooms_with_space == []:
                     message = "Sorry, there is no space in any rooms"
                 else:
                     for room in rooms_with_space:
-                        response = room.check_in(guest)
-                        if response[0]:
-                            message += response[1]
+                        is_checked_in, check_in_message = room.check_in(guest)
+                        message += check_in_message
+                        if is_checked_in:
                             break
-                        else:
-                            message += response[1]
 
         return message
 
